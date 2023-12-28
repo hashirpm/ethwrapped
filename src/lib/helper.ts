@@ -6,6 +6,8 @@ interface Transaction {
   hash: string;
   gasPrice: string;
   gasUsed: ethers.BigNumber;
+  from: string;
+  to: string;
 }
 const web3ClientUrl = `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`;
 
@@ -31,13 +33,17 @@ const fetchGas = async (
     sort: "asc",
   };
   console.log(params);
-  const currentEtherBalance = await getCurrentEtherBalance(
-    address,
-    params,
-    etherscanApiKey
-  );
+  // const currentEtherBalance = await getCurrentEtherBalance(
+  //   address,
+  //   params,
+  //   etherscanApiKey
+  // );
 
   const txns = await getTransactions(address, params, etherscanApiKey);
+  console.log('Most Transacted Address')
+  const mostTransactedDetails = findMostTransactedAddress(address, txns);
+  console.log({ mostTransactedDetails });
+
   let cumulativeGasUsed = 0.0;
 
   for (const txn of txns) {
@@ -49,13 +55,16 @@ const fetchGas = async (
   }
 
   console.log(`Total Gas Spent: ${cumulativeGasUsed} GWEI`);
-  const erc20Transfers = await getERC20Transfers(address, params, etherscanApiKey);
-    const erc721Transfers = await getERC721Transfers(
-      address,
-      params,
-      etherscanApiKey
-    );
-
+  const erc20Transfers = await getERC20Transfers(
+    address,
+    params,
+    etherscanApiKey
+  );
+  const erc721Transfers = await getERC721Transfers(
+    address,
+    params,
+    etherscanApiKey
+  );
 };
 const getCurrentEtherBalance = async (
   address: string,
@@ -79,8 +88,7 @@ const getCurrentEtherBalance = async (
       throw new Error(`Error from Etherscan API: ${response.data.message}`);
     }
     console.log("getEtherBalance", response.data);
-      console.log(`Total Ether Balance: ${response.data.result / 1e18} ETH`);
-
+    console.log(`Total Ether Balance: ${response.data.result / 1e18} ETH`);
 
     // const transactions: Transaction[] = response.data.result.map((tx: any) => ({
     //   hash: tx.hash,
@@ -112,6 +120,7 @@ const getTransactions = async (
         ...params,
       },
     });
+    console.log(response.data.result);
 
     if (response.data.status !== "1") {
       throw new Error(`Error from Etherscan API: ${response.data.message}`);
@@ -122,6 +131,8 @@ const getTransactions = async (
       hash: tx.hash,
       gasPrice: tx.gasPrice,
       gasUsed: ethers.BigNumber.from(tx.gasUsed),
+      to: tx.to,
+      from: tx.from,
     }));
 
     return transactions;
@@ -131,6 +142,38 @@ const getTransactions = async (
   }
 };
 
+const findMostTransactedAddress = (
+  address: string,
+  transactions: Transaction[]
+) => {
+  // Count the occurrences of each address
+  const addressCounts: { [address: string]: number } = {};
+  transactions.forEach((tx) => {
+    const fromAddress = tx.from.toLowerCase();
+    const toAddress = tx.to.toLowerCase();
+
+    if (fromAddress != address.toLowerCase()) {
+      // Increment count for fromAddress
+      addressCounts[fromAddress] = (addressCounts[fromAddress] || 0) + 1;
+    }
+    // Increment count for toAddress
+    if (toAddress != address.toLowerCase()) {
+      addressCounts[toAddress] = (addressCounts[toAddress] || 0) + 1;
+    }
+  });
+
+  // Find the address with the highest count
+  let mostTransactedAddress = "";
+  let highestCount = 0;
+  Object.entries(addressCounts).forEach(([address, count]) => {
+    if (count > highestCount) {
+      mostTransactedAddress = address;
+      highestCount = count;
+    }
+  });
+
+  return { mostTransactedAddress, highestCount };
+};
 
 const getERC20Transfers = async (
   address: string,
@@ -205,4 +248,3 @@ const getERC721Transfers = async (
     throw error;
   }
 };
-
