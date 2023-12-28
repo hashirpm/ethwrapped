@@ -117,7 +117,7 @@ export const getDeployedContracts = async (address: string) => {
 export const getTokenBalances = async (address: string) => {
   // Get token balances
   const balances = await alchemy.core.getTokenBalances(address);
-// console.log(balances)
+  // console.log(balances)
   // Remove tokens with zero balance
   const nonZeroBalances = balances.tokenBalances.filter((token: any) => {
     return (
@@ -142,9 +142,37 @@ export const getTokenBalances = async (address: string) => {
     balance = balance / Math.pow(10, metadata.decimals);
     balance = balance.toFixed(2);
 
-    tokenBalanceList.push({ name: metadata.name, balance: balance, symbol:metadata.symbol });
-    console.log('fetching')
+    tokenBalanceList.push({
+      name: metadata.name,
+      balance: balance,
+      symbol: metadata.symbol,
+    });
+    console.log("fetching");
   }
-      console.log({ tokenBalanceList });
+  console.log({ tokenBalanceList });
+};
+export const getNFTAirdrops = async (address: string) => {
+  //Define the optional `options` parameters
+  const nftList = [];
+  let options = {
+    excludeFilters: "SPAM",
+    orderBy: "TRANSFERTIME",
+  };
 
+  //Call the method to get the nfts owned by this address
+  let response = await alchemy.nft.getNftsForOwner(address, options);
+
+  nftList.push(...response.ownedNfts);
+  while (response.pageKey) {
+    let pageKey = response.pageKey;
+    response = await alchemy.nft.getNftsForOwner(address, options, pageKey);
+    nftList.push(...response.ownedNfts);
+  }
+  console.log({ nftList });
+  // Filter ownedNfts for the year 2023
+  const ownedNfts2023 = nftList.filter((nft: any) => {
+    const nftTimestamp = new Date(nft.blockTimestamp);
+    return nftTimestamp.getFullYear() === 2023;
+  });
+  console.log({ ownedNfts2023 });
 };
