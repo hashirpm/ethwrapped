@@ -8,6 +8,7 @@ interface Transaction {
   gasUsed: ethers.BigNumber;
   from: string;
   to: string;
+  value: string;
 }
 const web3ClientUrl = `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`;
 
@@ -40,9 +41,13 @@ const fetchGas = async (
   // );
 
   const txns = await getTransactions(address, params, etherscanApiKey);
-  console.log('Most Transacted Address')
+  console.log("Most Transacted Address");
   const mostTransactedDetails = findMostTransactedAddress(address, txns);
   console.log({ mostTransactedDetails });
+
+  console.log("Eth send and recieved");
+  const ethRevievedAndSent = getTotalEthReceivedAndSent(address, txns);
+  console.log({ethRevievedAndSent})
 
   let cumulativeGasUsed = 0.0;
 
@@ -133,6 +138,7 @@ const getTransactions = async (
       gasUsed: ethers.BigNumber.from(tx.gasUsed),
       to: tx.to,
       from: tx.from,
+      value: tx.value,
     }));
 
     return transactions;
@@ -173,6 +179,39 @@ const findMostTransactedAddress = (
   });
 
   return { mostTransactedAddress, highestCount };
+};
+
+const getTotalEthReceivedAndSent = (
+  address: string,
+  transactions: Transaction[]
+) => {
+  // Convert the target address to lowercase once
+  const lowercaseAddress = address.toLowerCase();
+
+  // Initialize total amounts
+  let totalEthReceived = 0;
+  let totalEthSent = 0;
+
+  transactions.forEach((tx) => {
+    const fromAddress = tx.from.toLowerCase();
+    const toAddress = tx.to.toLowerCase();
+
+    // Check if the transaction involves the target address
+    if (fromAddress === lowercaseAddress) {
+      // Increment totalEthSent with the amount sent by the target address
+      totalEthSent += parseFloat(tx.value) / 1e18; 
+    }
+
+    if (toAddress === lowercaseAddress) {
+      // Increment totalEthReceived with the amount received by the target address
+      totalEthReceived += parseFloat(tx.value) / 1e18;
+    }
+  });
+
+  return {
+    totalEthReceived,
+    totalEthSent,
+  };
 };
 
 const getERC20Transfers = async (

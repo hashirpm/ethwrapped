@@ -19,10 +19,10 @@ export default function Home() {
           onClick={async () => {
             console.log("Total Gas & Transactions + ERC721 ERC1155 Transfers Most Transacted Wallet");
 
-            await fetchDetailsOfYear(
-              "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-            ); //Vitalik.eth
-            // await fetchDetailsOfYear("0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426")
+            // await fetchDetailsOfYear(
+            //   "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+            // ); //Vitalik.eth
+            await fetchDetailsOfYear("0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426")
             console.log("Starting Balance");
             await getBalanceByTimestamp(
               "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
