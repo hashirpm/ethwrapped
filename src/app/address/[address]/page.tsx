@@ -46,8 +46,13 @@ export default function FetchDetails() {
             params: {
                 address
             }
-        }).then((res) => {
+        }).then(async (res) => {
             setData(res.data)
+            await axios.get('/api/add-address', {
+                params: {
+                    address
+                }
+            })
             var end = Date.now() + (3 * 1000);
 
             // go Buckeyes!
@@ -142,7 +147,7 @@ export default function FetchDetails() {
                         </Player>
                     </div>
                     :
-                    <div className="flex justify-center flex-col gap-10 items-center h-screen">
+                    <div className="flex justify-center flex-col gap-10 items-center h-[calc(100vh-150px)] pt-[100px]">
                         <div id="divToDownload" className="bg-black p-3" ref={elementRef}>
                             <div className="w-[960px] h-[540px] bg-black rounded-lg grid grid-cols-2 gap-2" >
                                 <div className=" grid grid-rows-2 gap-2">
