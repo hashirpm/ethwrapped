@@ -47,7 +47,7 @@ const fetchGas = async (
 
   console.log("Eth send and recieved");
   const ethRevievedAndSent = getTotalEthReceivedAndSent(address, txns);
-  console.log({ethRevievedAndSent})
+  console.log({ ethRevievedAndSent })
 
   let cumulativeGasUsed = 0.0;
 
@@ -199,7 +199,7 @@ const getTotalEthReceivedAndSent = (
     // Check if the transaction involves the target address
     if (fromAddress === lowercaseAddress) {
       // Increment totalEthSent with the amount sent by the target address
-      totalEthSent += parseFloat(tx.value) / 1e18; 
+      totalEthSent += parseFloat(tx.value) / 1e18;
     }
 
     if (toAddress === lowercaseAddress) {
@@ -287,3 +287,16 @@ const getERC721Transfers = async (
     throw error;
   }
 };
+
+
+export function calculatePercentageChange(startPrice: number, endPrice: number) {
+  // Ensure both prices are valid numbers
+  if (typeof startPrice !== 'number' || typeof endPrice !== 'number') {
+    throw new Error('Both startPrice and endPrice must be numbers');
+  }
+
+  // Calculate the percentage change
+  const percentageChange = ((endPrice - startPrice) / startPrice) * 100;
+
+  return percentageChange;
+}

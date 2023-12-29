@@ -23,7 +23,7 @@ export default function MainPage() {
             <div className={`${aviano.className} text-7xl txt-gradient w-full text-center txt txt-rotate ${rotate ? "txt-test" : ""}`}>
                 ETHEREUM
             </div>
-            <div className={`${aviano.className} -mt-[55px] text-7xl  txt-gradient-2 w-full text-center ${rotate ? "txt-test-2" : ""} `}>
+            <div className={`${aviano.className}  text-7xl  txt-gradient-2 w-full text-center ${rotate ? "txt-test-2" : ""} `}>
                 2023
             </div>
 

@@ -32,11 +32,11 @@ export default function Home() {
     const tokenBalances = await getTokenBalances(
       "0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426"
     ); //Takes long for big wallets. so should whitelist contract address to fetch for balance
-    console.log({startingBalance})
-    console.log({endingBalance})
-    console.log({mintedNfts})
-    console.log({deployedContracts})
-    console.log({tokenBalances})
+    console.log({ startingBalance })
+    console.log({ endingBalance })
+    console.log({ mintedNfts })
+    console.log({ deployedContracts })
+    console.log({ tokenBalances })
   };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -53,16 +53,16 @@ export default function Home() {
               "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
             ); //Vitalik.eth
             // await fetchDetailsOfYear("0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426")
-            console.log("Starting Balance");
-            await getBalanceByTimestamp(
+            let start = await getBalanceByTimestamp(
               "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
               "2023-01-01T00:00:00Z"
             );
-            console.log("Ending Balance");
-            await getBalanceByTimestamp(
+            console.log("Starting Balance", start);
+            let end = await getBalanceByTimestamp(
               "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
               "2023-12-31T23:59:59Z"
             );
+            console.log("Ending Balance", end);
             console.log("Minted NFTS");
             await getMintedNFTs("0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045");
             console.log("Deployed Contracts");
