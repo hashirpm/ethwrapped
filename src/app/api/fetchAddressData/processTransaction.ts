@@ -58,7 +58,7 @@ export const processTransactions = (
   });
   highestTransactionValue /= 1e18;
   totalEthReceived /= 1e18;
-  totalEthSent / 1e18;
+  totalEthSent /= 1e18;
   return {
     mostTransactedAddress,
     mostTransactedCount,
