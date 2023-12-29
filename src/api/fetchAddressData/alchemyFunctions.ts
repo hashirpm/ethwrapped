@@ -1,12 +1,12 @@
-import { fromBlock, toBlock } from "./const";
+import { fromBlock, toBlock } from "@/lib/const";
 
 const { Alchemy, Utils, Network } = require("alchemy-sdk");
 const EthDater = require("ethereum-block-by-date");
 
-const apiKey = process.env.ALCHEMY_API_KEY;
+const alchemyApiKey = process.env.ALCHEMY_API_KEY;
 
 const settings = {
-  apiKey: apiKey,
+  apiKey: alchemyApiKey,
   network: Network.ETH_MAINNET,
 };
 
@@ -27,7 +27,8 @@ export const getBalanceByTimestamp = async (
   // Get balance and format in terms of ETH
   let balance = await alchemy.core.getBalance(address, block);
   balance = Utils.formatEther(balance);
-  console.log(`Balance of ${address}: ${balance} ETH`);
+  // console.log(`Balance of ${address}: ${balance} ETH`);
+  return ({balance});
 };
 export const getMintedNFTs = async (address: string) => {
   const res = await alchemy.core.getAssetTransfers({
@@ -69,8 +70,10 @@ export const getMintedNFTs = async (address: string) => {
       }
     }
   }
-  console.log({ erc721List });
-  console.log({ erc1155List });
+  
+  // console.log({ erc721List });
+  // console.log({ erc1155List });
+  return ({erc721List,erc1155List})
 };
 
 export const getDeployedContracts = async (address: string) => {
@@ -112,7 +115,8 @@ export const getDeployedContracts = async (address: string) => {
   // Wait for all the transaction receipts to be fetched
   const receipts = await Promise.all(promises);
   const contractAddresses = receipts.map((receipt) => receipt?.contractAddress);
-  console.log({ contractAddresses });
+  // console.log({ contractAddresses });
+  return ({contractAddresses})
 };
 export const getTokenBalances = async (address: string) => {
   // Get token balances
@@ -149,7 +153,8 @@ export const getTokenBalances = async (address: string) => {
     });
     console.log("fetching");
   }
-  console.log({ tokenBalanceList });
+  // console.log({ tokenBalanceList });
+  return { tokenBalanceList };
 };
 // export const getNFTAirdrops = async (address: string) => {
 //   //Define the optional `options` parameters
