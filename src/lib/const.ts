@@ -13,7 +13,12 @@ export interface Transaction {
 import localFont from 'next/font/local'
 
 export const aviano = localFont({
-    src: '../../public/aviano.ttf',
-    display: 'fallback',
+  src: '../../public/aviano.ttf',
+  display: 'fallback',
 })
 
+
+
+export const shortWalletAddress = (address?: string) => {
+  if (address) return address.slice(0, 5) + "..." + address.slice(-4,)
+}
