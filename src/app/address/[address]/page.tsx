@@ -1,50 +1,21 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
-import { shortWalletAddress } from "@/lib/const";
+import { aviano, shortWalletAddress } from "@/lib/const";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import { Data } from "@/lib/types";
-import html2canvas from 'html2canvas';
 import { Button } from "@/components/ui/button";
+import Logo from "../../../../public/logo.png"
+import Image from "next/image";
+import { toPng } from 'html-to-image';
 
 export default function FetchDetails() {
 
     const [data, setData] = useState<Data | null>(null)
-
+    const elementRef = useRef(null);
     const path = usePathname()
-    const downloadImage = () => {
-        // Get the reference to the div you want to download
-        const divToDownload = document.getElementById('divToDownload');
 
-        // Use html2canvas to convert the div to a canvas
-        html2canvas(divToDownload as HTMLElement)
-            .then((canvas) => {
-                // Convert the canvas to a data URL
-                const dataURL = canvas.toDataURL('image/png');
-
-                // Create a link element
-                const link = document.createElement('a');
-
-                // Set the href attribute of the link to the data URL
-                link.href = dataURL;
-
-                // Set the download attribute to specify the filename
-                link.download = 'div_image.png';
-
-                // Append the link to the document
-                document.body.appendChild(link);
-
-                // Trigger a click on the link to start the download
-                link.click();
-
-                // Remove the link from the document
-                document.body.removeChild(link);
-            })
-            .catch((error) => {
-                console.error('Error generating image:', error);
-            });
-    };
     const fetchData = async () => {
         await axios.get('/api/fetchAddressData', {
             params: {
@@ -56,7 +27,19 @@ export default function FetchDetails() {
             console.log(err)
         })
     }
-
+    const htmlToImageConvert = () => {
+        if (elementRef.current)
+            toPng(elementRef.current, { cacheBust: false })
+                .then((dataUrl) => {
+                    const link = document.createElement("a");
+                    link.download = "my-image-name.png";
+                    link.href = dataUrl;
+                    link.click();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+    };
     useEffect(() => {
         fetchData()
     }, [])
@@ -77,61 +60,77 @@ export default function FetchDetails() {
                     </div>
                     :
                     <div className="flex justify-center flex-col gap-10 items-center h-screen">
-                        <div className="w-[960px] h-[540px] bg-black rounded-lg grid grid-cols-2 gap-2" id="divToDownload">
-                            <div className=" grid grid-rows-2 gap-2">
-                                <div className=" grid grid-cols-2 gap-2">
-                                    <div className="grid grid-rows-2 gap-2">
-                                        <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
-                                            <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full">
-                                                <p className="text-2xl font-bold text-gray-200">{data.txnCount}</p>
-                                                <p className="text-gray-400 text-xs">Transactions</p>
+                        <div id="divToDownload" className="bg-black p-3" ref={elementRef}>
+                            <div className="w-[960px] h-[540px] bg-black rounded-lg grid grid-cols-2 gap-2" >
+                                <div className=" grid grid-rows-2 gap-2">
+                                    <div className=" grid grid-cols-2 gap-2">
+                                        <div className="grid grid-rows-2 gap-2">
+                                            <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
+                                                <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full">
+                                                    <p className="text-2xl font-bold text-gray-200">{data.txnCount}</p>
+                                                    <p className="text-gray-400 text-xs">Transactions</p>
+                                                </div>
+                                            </div>
+                                            <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
+                                                <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full" >
+                                                    <p className="text-2xl font-bold text-gray-200">{(data.cumulativeGasUsed / 1e9).toFixed(4)} $ETH</p>
+                                                    <p className="text-gray-400 text-xs">Total txn fee paid</p>
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
-                                            <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full" >
-                                                <p className="text-2xl font-bold text-gray-200">{(data.cumulativeGasUsed / 1e9).toFixed(4)} $ETH</p>
-                                                <p className="text-gray-400 text-xs">Total txn fee paid</p>
+                                            <div className="box bg-zinc-900 rounded-lg flex flex-col justify-center items-center gap-10 h-full" >
+                                                <div>
+                                                    <p className="text-2xl font-bold text-gray-200">{data.totalEthSent.toFixed(4)}</p>
+                                                    <p className="text-gray-400 text-xs">ETH Sent</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-2xl font-bold text-gray-200">{data.totalEthRecieved.toFixed(4)}</p>
+                                                    <p className="text-gray-400 text-xs">ETH Received</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
-                                        <div className="box bg-zinc-900 rounded-lg flex flex-col justify-center items-center gap-10 h-full" >
-                                            <div>
-                                                <p className="text-2xl font-bold text-gray-200">{data.totalEthSent.toFixed(4)}</p>
-                                                <p className="text-gray-400 text-xs">ETH Sent</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-2xl font-bold text-gray-200">{data.totalEthRecieved.toFixed(4)}</p>
-                                                <p className="text-gray-400 text-xs">ETH Received</p>
-                                            </div>
+                                        <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full" >
+                                            <p className="text-2xl font-bold text-gray-200">{shortWalletAddress(data.mostTransactedAddress)}</p>
+                                            <p className="text-gray-400 text-xs">Address you most interacted with</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
-                                    <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full" >
-                                        <p className="text-2xl font-bold text-gray-200">{shortWalletAddress(data.mostTransactedAddress)}</p>
-                                        <p className="text-gray-400 text-xs">Address you most interacted with</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className=" grid grid-rows-2 gap-2">
-                                <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
-                                    <div className=" box bg-zinc-900 rounded-lg" />
-                                </div>
-                                <div className=" grid grid-cols-2 gap-2">
+                                <div className=" grid grid-rows-2 gap-2">
                                     <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
                                         <div className=" box bg-zinc-900 rounded-lg" />
                                     </div>
-                                    <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
-                                        <div className=" box bg-zinc-900 rounded-lg" />
-                                    </div>
-                                    <div className="relative col-span-2 h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
-                                        <div className=" box bg-zinc-900 rounded-lg " />
+                                    <div className=" grid grid-cols-2 gap-2">
+                                        <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
+                                            <div className=" box bg-zinc-900 rounded-lg" />
+                                        </div>
+                                        <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
+                                            <div className=" box bg-zinc-900 rounded-lg" />
+                                        </div>
+                                        <div className="relative col-span-2 h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
+                                            <div className=" box bg-zinc-900 rounded-lg " />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <Image src={Logo} alt="logo" className="max-w-[500px] mx-auto py-4" />
+
+                            {/* <div className="flex items-center justify-center mt-4 text-4xl">
+                                <div className={`${aviano.className}  px-4  txt-gradient text-center txt txt-rotate`}>
+                                    ETHEREUM
+                                </div>
+                                <div className={`${aviano.className}  txt-gradient px-4  text-center `}>
+                                    2023
+                                </div>
+
+                                <div className={`${aviano.className}  txt-gradient px-4  text-center `}>
+                                    UNWRAPPED
+                                </div>
+                            </div> */}
                         </div>
-                        <Button onClick={downloadImage}
+                        <Button onClick={htmlToImageConvert}
                             className="relative isolate inline-flex items-center justify-center gap-x-2 rounded-lg border text-base/6 font-semibold px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] sm:px-[calc(theme(spacing.3)-1px)] sm:py-[calc(theme(spacing[1.5])-1px)] sm:text-sm/6 focus:outline-none data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-blue-500 data-[disabled]:opacity-50 [&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[--btn-icon] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4 forced-colors:[--btn-icon:ButtonText] forced-colors:data-[hover]:[--btn-icon:ButtonText] border-transparent bg-[--btn-border] dark:bg-[--btn-bg] before:absolute before:inset-0 before:-z-10 before:rounded-[calc(theme(borderRadius.lg)-1px)] before:bg-[--btn-bg] before:shadow dark:before:hidden dark:border-white/5 after:absolute after:inset-0 after:-z-10 after:rounded-[calc(theme(borderRadius.lg)-1px)] after:shadow-[shadow:inset_0_1px_theme(colors.white/15%)] after:data-[active]:bg-[--btn-hover-overlay] after:data-[hover]:bg-[--btn-hover-overlay] dark:after:-inset-px dark:after:rounded-lg before:data-[disabled]:shadow-none after:data-[disabled]:shadow-none text-white [--btn-bg:theme(colors.zinc.900)] [--btn-border:theme(colors.zinc.950/90%)] [--btn-hover-overlay:theme(colors.white/10%)] dark:text-white dark:[--btn-bg:theme(colors.zinc.600)] dark:[--btn-hover-overlay:theme(colors.white/5%)] [--btn-icon:theme(colors.zinc.400)] data-[active]:[--btn-icon:theme(colors.zinc.300)] data-[hover]:[--btn-icon:theme(colors.zinc.300)] cursor-pointer hover:opacity-90"
                         >
                             Download
