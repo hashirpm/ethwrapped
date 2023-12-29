@@ -30,11 +30,11 @@ export default function FetchDetails() {
         setContractsDeployed(contractCount.contractAddresses.length)
         setNftsMintedCount(nftsMinted.erc1155List.length + nftsMinted.erc721List.length)
         let start = await getBalanceByTimestamp(
-            "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+            address,
             "2023-01-01T00:00:00Z"
         );
         let end = await getBalanceByTimestamp(
-            "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+            address,
             "2023-12-31T23:59:59Z"
         );
         if (start.balance == end.balance) {
