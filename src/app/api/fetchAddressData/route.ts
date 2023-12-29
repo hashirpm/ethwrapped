@@ -5,12 +5,7 @@ import { getTransactions } from "./fetchTransactions";
 import { processTransactions } from "./processTransaction";
 import { getERC20Transfers } from "./getERC20Transfers";
 import { getERC721Transfers } from "./getERC721Transfers";
-import {
-  getBalanceByTimestamp,
-  getDeployedContracts,
-  getMintedNFTs,
-  getTokenBalances,
-} from "./alchemyFunctions";
+
 
 export async function GET(req: NextRequest) {
   //   const reqBody = await req.json();
@@ -41,17 +36,19 @@ export async function GET(req: NextRequest) {
     params,
     etherscanApiKey
   );
-  const startingBalance = await getBalanceByTimestamp(
-    walletAddress,
-    "2023-01-01T00:00:00Z"
-  );
-  const endingBalance = await getBalanceByTimestamp(
-    walletAddress,
-    "2023-12-31T23:59:59Z"
-  );
-  const mintedNfts = await getMintedNFTs(walletAddress);
-  const deployedContracts = await getDeployedContracts(walletAddress);
-  const tokenBalances = await getTokenBalances(walletAddress);
+  console.log(erc20Transfers)
+  console.log(erc721Transfers)
+  // const startingBalance = await getBalanceByTimestamp(
+  //   walletAddress,
+  //   "2023-01-01T00:00:00Z"
+  // );
+  // const endingBalance = await getBalanceByTimestamp(
+  //   walletAddress,
+  //   "2023-12-31T23:59:59Z"
+  // );
+  // const mintedNfts = await getMintedNFTs(walletAddress);
+  // const deployedContracts = await getDeployedContracts(walletAddress);
+  // const tokenBalances = await getTokenBalances(walletAddress);
   return NextResponse.json({
     txnCount: txns.length,
     mostTransactedAddress: txnProcessedData.mostTransactedAddress,
@@ -59,13 +56,13 @@ export async function GET(req: NextRequest) {
     totalEthRecieved: txnProcessedData.totalEthReceived,
     totalEthSent: txnProcessedData.totalEthSent,
     cumulativeGasUsed: txnProcessedData.cumulativeGasUsed,
-    erc20TransferCount: erc20Transfers.length,
-    erc721TransferCount: erc721Transfers.length,
-    startingBalance: startingBalance,
-    endingBalance: endingBalance,
-    mintedNftsCount:
-      mintedNfts.erc721List.length + mintedNfts.erc1155List.length,
-    deployedContractsCount: deployedContracts.contractAddresses.length,
-    tokenBalances: tokenBalances,
+    erc20TransferCount: erc20Transfers.result.length,
+    erc721TransferCount: erc721Transfers.result.length,
+    // startingBalance: startingBalance,
+    // endingBalance: endingBalance,
+    // mintedNftsCount:
+    //   mintedNfts.erc721List.length + mintedNfts.erc1155List.length,
+    // deployedContractsCount: deployedContracts.contractAddresses.length,
+    // tokenBalances: tokenBalances,
   });
 }

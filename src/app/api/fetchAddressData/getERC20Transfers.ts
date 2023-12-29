@@ -21,7 +21,7 @@ export const getERC20Transfers = async (
     if (response.data.status !== "1") {
       throw new Error(`Error from Etherscan API: ${response.data.message}`);
     }
-    console.log("getERC20Transfers", response.data);
+    // console.log("getERC20Transfers", response.data);
 
     // const transactions: Transaction[] = response.data.result.map((tx: any) => ({
     //   hash: tx.hash,

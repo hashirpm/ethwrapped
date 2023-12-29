@@ -21,8 +21,8 @@ export const getCurrentEtherBalance = async (
     if (response.data.status !== "1") {
       throw new Error(`Error from Etherscan API: ${response.data.message}`);
     }
-    console.log("getEtherBalance", response.data);
-    console.log(`Total Ether Balance: ${response.data.result / 1e18} ETH`);
+    // console.log("getEtherBalance", response.data);
+    // console.log(`Total Ether Balance: ${response.data.result / 1e18} ETH`);
 
     // const transactions: Transaction[] = response.data.result.map((tx: any) => ({
     //   hash: tx.hash,
