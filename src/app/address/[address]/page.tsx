@@ -4,7 +4,7 @@ import { useState } from "react"
 import { CircleLoader } from "react-awesome-loaders";
 export default function FetchDetails() {
 
-    const [data, setData] = useState(null)
+    const [data, setData] = useState(1)
 
     return (
         <div>
@@ -19,7 +19,29 @@ export default function FetchDetails() {
                             mobileSize={"64px"}
                         />
                     </div>
-                    : ""
+                    :
+                    <div className="flex justify-center items-center h-screen">
+                        <div className="w-[960px] h-[540px] rounded-lg grid grid-cols-2 gap-2">
+                            <div className=" grid grid-rows-2 gap-2">
+                                <div className=" grid grid-cols-2 gap-2">
+                                    <div className="grid grid-rows-2 gap-2">
+                                        <div className=" box" />
+                                        <div className=" box" />
+                                    </div>
+                                    <div className=" box" />
+                                </div>
+                                <div className=" box" />
+                            </div>
+                            <div className=" grid grid-rows-2 gap-2">
+                                <div className=" box" />
+                                <div className=" grid grid-cols-2 gap-2">
+                                    <div className=" box" />
+                                    <div className=" box" />
+                                    <div className=" box col-span-2" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             }
 
         </div>
