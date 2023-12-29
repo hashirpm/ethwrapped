@@ -10,7 +10,7 @@ import { fetchDetailsOfYear } from "@/lib/helper";
 import axios from "axios";
 
 export default function Home() {
-  const walletAddress = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045";
+  const walletAddress = "0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426";
   const fetchAddressData = async () => {
     await axios
       .get(`/api/fetchAddressData?address=${walletAddress}`)

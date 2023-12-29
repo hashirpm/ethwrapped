@@ -36,8 +36,7 @@ export async function GET(req: NextRequest) {
     params,
     etherscanApiKey
   );
-  console.log(erc20Transfers)
-  console.log(erc721Transfers)
+
   // const startingBalance = await getBalanceByTimestamp(
   //   walletAddress,
   //   "2023-01-01T00:00:00Z"
@@ -53,6 +52,9 @@ export async function GET(req: NextRequest) {
     txnCount: txns.length,
     mostTransactedAddress: txnProcessedData.mostTransactedAddress,
     mostTransactedCount: txnProcessedData.mostTransactedCount,
+    highestTransactionValue: txnProcessedData.highestTransactionValue,
+    highestTransactionType: txnProcessedData.highestTransactionType,
+    highestTransactionAddress: txnProcessedData.highestTransactionAddress,
     totalEthRecieved: txnProcessedData.totalEthReceived,
     totalEthSent: txnProcessedData.totalEthSent,
     cumulativeGasUsed: txnProcessedData.cumulativeGasUsed,
