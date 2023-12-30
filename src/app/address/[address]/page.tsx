@@ -264,6 +264,7 @@ export default function FetchDetails() {
                             </Link>
                         </div>
                     </div>
+
             }
 
         </div>
