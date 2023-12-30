@@ -12,6 +12,7 @@ import { toPng } from 'html-to-image';
 import { getBalanceByTimestamp, getDeployedContracts, getMintedNFTs, getTokenBalances } from "@/lib/alchemy";
 import { calculatePercentageChange } from "@/lib/helper";
 import confetti from 'canvas-confetti';
+import { fetchPoaps } from "@/lib/poap";
 
 export default function FetchDetails() {
 
@@ -19,6 +20,7 @@ export default function FetchDetails() {
     const [nftsMintedCount, setNftsMintedCount] = useState<number>(0)
     const [contractsDeployed, setContractsDeployed] = useState<number>(0)
     const [portfolio, setPortfolio] = useState<number>(0)
+    const [totalPoaps, setTotalPoaps] = useState<number>(0)
     const elementRef = useRef(null);
     const path = usePathname()
 
@@ -27,6 +29,8 @@ export default function FetchDetails() {
 
         let nftsMinted = await getMintedNFTs(address)
         let contractCount = await getDeployedContracts(address)
+        let poap = await fetchPoaps(address)
+        setTotalPoaps(poap?.total)
         setContractsDeployed(contractCount.contractAddresses.length)
         setNftsMintedCount(nftsMinted.erc1155List.length + nftsMinted.erc721List.length)
         let start = await getBalanceByTimestamp(
@@ -202,7 +206,7 @@ export default function FetchDetails() {
                                         </div>
                                         <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
                                             <div className=" box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full">
-                                                <p className="text-2xl font-bold text-gray-200">10</p>
+                                                <p className="text-2xl font-bold text-gray-200">{totalPoaps}</p>
                                                 <p className="text-gray-400 text-xs">POAPs Minted</p>
                                             </div>
                                         </div>
