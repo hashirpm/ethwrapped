@@ -151,9 +151,9 @@ export default function FetchDetails() {
                         </Player>
                     </div>
                     :
-                    <div className="flex justify-center flex-col gap-10 items-center h-[calc(100vh-150px)] pt-[100px]">
+                    <div className="flex justify-center flex-col gap-10 items-center xl:h-[calc(100vh-150px)] pt-[100px]">
                         <div id="divToDownload" className="bg-black p-3" ref={elementRef}>
-                            <div className="w-[960px] h-[540px] bg-black rounded-lg grid grid-cols-2 gap-2" >
+                            <div className="w-full lg:w-[960px] lg:h-[540px] bg-black rounded-lg grid grid-cols-1 lg:grid-cols-2 gap-2" >
                                 <div className=" grid grid-rows-2 gap-2">
                                     <div className=" grid grid-cols-2 gap-2">
                                         <div className="grid grid-rows-2 gap-2">
@@ -164,7 +164,7 @@ export default function FetchDetails() {
                                                 </div>
                                             </div>
                                             <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
-                                                <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full" >
+                                                <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full py-4" >
                                                     <p className="text-2xl font-bold text-gray-200">{(data.cumulativeGasUsed / 1e9).toFixed(4)} $ETH</p>
                                                     <p className="text-gray-400 text-xs">Total txn fee paid</p>
                                                 </div>
@@ -199,7 +199,7 @@ export default function FetchDetails() {
                                     </div>
                                     <div className=" grid grid-cols-2 gap-2">
                                         <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
-                                            <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full">
+                                            <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full py-3">
                                                 <p className="text-2xl font-bold text-gray-200">{contractsDeployed}</p>
                                                 <p className="text-gray-400 text-xs">Contracts Deployed</p>
                                             </div>
@@ -211,7 +211,7 @@ export default function FetchDetails() {
                                             </div>
                                         </div>
                                         <div className="relative col-span-2 h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
-                                            <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full">
+                                            <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full py-3">
                                                 <p className="text-3xl font-bold text-gray-200">{portfolio.toFixed(2)} %</p>
                                                 <p className="text-gray-400 text-xs">
                                                     {
@@ -225,7 +225,7 @@ export default function FetchDetails() {
                                     </div>
                                 </div>
                             </div>
-                            <Image src={Logo} alt="logo" className="max-w-[500px] mx-auto py-4" />
+                            <Image src={Logo} alt="logo" className="w-full max-w-[500px] mx-auto py-4" />
 
                             {/* <div className="flex items-center justify-center mt-4 text-4xl">
                                 <div className={`${aviano.className}  px-4  txt-gradient text-center txt txt-rotate`}>

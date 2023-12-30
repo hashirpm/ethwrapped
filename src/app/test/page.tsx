@@ -28,15 +28,15 @@ export default function MainPage() {
     }
 
     return (
-        <div className="flex justify-center flex-col gap-2 items-center h-[calc(100vh-150px)] pt-[100px] relative font-aviano">
-            <div className={`${aviano.className} text-7xl txt-gradient w-full text-center txt txt-rotate ${rotate ? "txt-test" : ""}`}>
+        <div className="flex px-4 justify-center flex-col gap-2 items-center h-[calc(100vh-150px)] pt-[100px] relative font-aviano">
+            <div className={`${aviano.className} text-3xl md:text-6xl txt-gradient w-full text-center txt txt-rotate ${rotate ? "txt-test" : ""}`}>
                 ETHEREUM
             </div>
-            <div className={`${aviano.className}  text-7xl  txt-gradient-2 w-full text-center ${rotate ? "txt-test-2" : ""} `}>
+            <div className={`${aviano.className}  text-3xl md:text-6xl  txt-gradient-2 w-full text-center ${rotate ? "txt-test-2" : ""} `}>
                 2023
             </div>
 
-            <div className={`logo_letters text-5xl flex ${aviano.className} ${rotate ? "txt-test-3" : ""}`}>
+            <div className={`logo_letters text-2xl md:text-6xl md:ml-10 flex ${aviano.className} ${rotate ? "txt-test-3" : ""}`}>
                 <div className={`logo__letter is-loaded `}>
                     <div className="logo__character ">U</div>
                     <div className="logo__loader-wrapper">
