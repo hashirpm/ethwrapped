@@ -104,7 +104,7 @@
 }
 
 .logo__letter:nth-child(1) .logo__character {
-  padding-right: 50%;
+  padding-right: 30%;
   background-image: linear-gradient(to right, #ff00c7, #ff10b3);
 }
 
@@ -140,7 +140,7 @@
 }
 
 .logo__letter:nth-child(2) .logo__character {
-  padding-right: 50%;
+  padding-right: 30%;
   background-image: linear-gradient(to right, #ff10b3, #ff3f77);
 }
 
@@ -265,7 +265,7 @@
 
 @keyframes moveTop {
   from {
-    transform: translateY(50px);
+    transform: translateY(30px);
     opacity: 0;
   }
 

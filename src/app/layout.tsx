@@ -19,21 +19,23 @@ export default function RootLayout({
     <html lang="en">
       <head>
 
-        <title>ETH Unwrapped 2023</title>
-        <meta name="description" content="ETH Unwrapped 2023 by Shiyas & Hashir" />
+
+        <title>ETH Wrapped 2023</title>
+        <meta name="description" content="ETH Wrapped 2023 by Shiyas & Hashir" />
 
         <meta property="og:url" content="https://www.ethwrapped.xyz/" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="ETH Unwrapped 2023" />
-        <meta property="og:description" content="ETH Unwrapped 2023 by Shiyas & Hashir" />
-        <meta property="og:image" content="https://opengraph.b-cdn.net/production/documents/42e48fee-8830-4aba-a07d-4ca0372fefa7.png?token=Q8zMnp-zWhthcAybj7eyFz6L8L6GSDr2FA88iz5F3ls&height=843&width=1200&expires=33239918663" />
+        <meta property="og:title" content="ETH Wrapped 2023" />
+        <meta property="og:description" content="ETH Wrapped 2023 by Shiyas & Hashir" />
+        <meta property="og:image" content="https://opengraph.b-cdn.net/production/documents/c44451d3-7012-4c9e-88ea-813329be06e1.png?token=M0YaKkhxfy58Vn2x_EWDueSZcK5Rj8kbC0p7WzoW0GQ&height=770&width=1200&expires=33239920044" />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta property="twitter:domain" content="ethwrapped.vercel.app" />
+        <meta property="twitter:domain" content="ethwrapped.xyz" />
         <meta property="twitter:url" content="https://www.ethwrapped.xyz/" />
-        <meta name="twitter:title" content="ETH Unwrapped 2023" />
-        <meta name="twitter:description" content="ETH Unwrapped 2023 by Shiyas & Hashir" />
-        <meta name="twitter:image" content="https://opengraph.b-cdn.net/production/documents/42e48fee-8830-4aba-a07d-4ca0372fefa7.png?token=Q8zMnp-zWhthcAybj7eyFz6L8L6GSDr2FA88iz5F3ls&height=843&width=1200&expires=33239918663" />
+        <meta name="twitter:title" content="ETH Wrapped 2023" />
+        <meta name="twitter:description" content="ETH Wrapped 2023 by Shiyas & Hashir" />
+        <meta name="twitter:image" content="https://opengraph.b-cdn.net/production/documents/c44451d3-7012-4c9e-88ea-813329be06e1.png?token=M0YaKkhxfy58Vn2x_EWDueSZcK5Rj8kbC0p7WzoW0GQ&height=770&width=1200&expires=33239920044" />
+
       </head>
       <body className={inter.className}>
         {children}
