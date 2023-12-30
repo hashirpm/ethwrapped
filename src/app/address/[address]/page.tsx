@@ -260,7 +260,6 @@ export default function FetchDetails() {
                                 >
                                     <Share2 className=" w-4 h-4" />
                                     Share on <Image src={XLogo} alt="twitter" className="w-6 h-6" />
-
                                 </button>
                             </Link>
                         </div>
