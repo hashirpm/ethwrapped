@@ -48,7 +48,7 @@ export const processTransactions = (
     }
   });
   // Find the address with the highest count
-  let mostTransactedAddress = "";
+  let mostTransactedAddress = "N/A";
   let mostTransactedCount = 0;
   Object.entries(addressCounts).forEach(([address, count]) => {
     if (count > mostTransactedCount) {
