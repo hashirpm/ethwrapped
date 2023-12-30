@@ -11,37 +11,37 @@ import { fetchPoaps } from "@/lib/poap";
 import axios from "axios";
 
 export default function Home() {
-  const walletAddress = "0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426";
+  const walletAddress = "0xe57F24E3c9C5bE617E6D330D2B2308926188e398";
   const fetchAddressData = async () => {
     await axios
       .get(`/api/fetchAddressData?address=${walletAddress}`)
       .then((res) => {
         console.log(res.data);
       });
-    const startingBalance = await getBalanceByTimestamp(
-      walletAddress,
-      "2023-01-01T00:00:00Z"
-    );
-    const endingBalance = await getBalanceByTimestamp(
-      walletAddress,
-      "2023-12-31T23:59:59Z"
-    );
-    const mintedNfts = await getMintedNFTs(walletAddress);
-    const deployedContracts = await getDeployedContracts(
-      "0xB8D66FB00061378afd77c5C22E47cFf9C57ca62f"
-    );
-    const tokenBalances = await getTokenBalances(
-      "0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426"
-    ); //Takes long for big wallets. so should whitelist contract address to fetch for balance
-    const poapCount = await fetchPoaps(
-      "0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426"
-    );
-    console.log({ startingBalance })
-    console.log({ endingBalance })
-    console.log({ mintedNfts })
-    console.log({ deployedContracts })
-    console.log({ tokenBalances })
-    console.log({poapCount})
+    // const startingBalance = await getBalanceByTimestamp(
+    //   walletAddress,
+    //   "2023-01-01T00:00:00Z"
+    // );
+    // const endingBalance = await getBalanceByTimestamp(
+    //   walletAddress,
+    //   "2023-12-31T23:59:59Z"
+    // );
+    // const mintedNfts = await getMintedNFTs(walletAddress);
+    // const deployedContracts = await getDeployedContracts(
+    //   "0xB8D66FB00061378afd77c5C22E47cFf9C57ca62f"
+    // );
+    // const tokenBalances = await getTokenBalances(
+    //   "0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426"
+    // ); //Takes long for big wallets. so should whitelist contract address to fetch for balance
+    // const poapCount = await fetchPoaps(
+    //   "0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426"
+    // );
+    // console.log({ startingBalance })
+    // console.log({ endingBalance })
+    // console.log({ mintedNfts })
+    // console.log({ deployedContracts })
+    // console.log({ tokenBalances })
+    // console.log({poapCount})
   };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
