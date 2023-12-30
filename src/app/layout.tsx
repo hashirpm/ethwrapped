@@ -22,18 +22,18 @@ export default function RootLayout({
         <title>ETH Unwrapped 2023</title>
         <meta name="description" content="ETH Unwrapped 2023 by Shiyas & Hashir" />
 
-        <meta property="og:url" content="https://ethwrapped.vercel.app/" />
+        <meta property="og:url" content="https://www.ethwrapped.xyz/" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="ETH Unwrapped 2023" />
         <meta property="og:description" content="ETH Unwrapped 2023 by Shiyas & Hashir" />
-        <meta property="og:image" content="https://opengraph.b-cdn.net/production/documents/35f9c73e-6a2a-45d6-a9d2-2a74c0b2bd35.png?token=jKEP5Ffr9V0W-QvgINBsGndLs7UtS3HzRImhNdeDbX8&height=574&width=1200&expires=33239881002" />
+        <meta property="og:image" content="https://opengraph.b-cdn.net/production/documents/42e48fee-8830-4aba-a07d-4ca0372fefa7.png?token=Q8zMnp-zWhthcAybj7eyFz6L8L6GSDr2FA88iz5F3ls&height=843&width=1200&expires=33239918663" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content="ethwrapped.vercel.app" />
-        <meta property="twitter:url" content="https://ethwrapped.vercel.app/" />
+        <meta property="twitter:url" content="https://www.ethwrapped.xyz/" />
         <meta name="twitter:title" content="ETH Unwrapped 2023" />
         <meta name="twitter:description" content="ETH Unwrapped 2023 by Shiyas & Hashir" />
-        <meta name="twitter:image" content="https://opengraph.b-cdn.net/production/documents/35f9c73e-6a2a-45d6-a9d2-2a74c0b2bd35.png?token=jKEP5Ffr9V0W-QvgINBsGndLs7UtS3HzRImhNdeDbX8&height=574&width=1200&expires=33239881002" />
+        <meta name="twitter:image" content="https://opengraph.b-cdn.net/production/documents/42e48fee-8830-4aba-a07d-4ca0372fefa7.png?token=Q8zMnp-zWhthcAybj7eyFz6L8L6GSDr2FA88iz5F3ls&height=843&width=1200&expires=33239918663" />
       </head>
       <body className={inter.className}>
         {children}

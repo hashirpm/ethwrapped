@@ -29,6 +29,8 @@ export default function MainPage() {
 
   return (
     <div className="flex px-4 justify-center flex-col gap-2 items-center h-[calc(100vh-150px)] pt-[100px] relative font-aviano">
+      <div className="left-[-25%]  absolute h-72 w-72 bg-[#0a69da] rounded-full blur-[5rem] opacity-30 md:left-0" />
+      <div className="hidden top-[60vh] right-0 absolute h-72 w-72 bg-[#0a69da] rounded-full blur-[5rem] opacity-30 md:block" />
       <div className={`${aviano.className} text-3xl md:text-6xl txt-gradient w-full text-center txt txt-rotate ${rotate ? "txt-test" : ""}`}>
         ETHEREUM
       </div>
