@@ -1,96 +1,116 @@
-"use client";
+"use client"
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { aviano } from '@/lib/const'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 
-import {
-  getBalanceByTimestamp,
-  getDeployedContracts,
-  getMintedNFTs,
-  getTokenBalances,
-} from "@/lib/alchemy";
-import { fetchDetailsOfYear } from "@/lib/helper";
-import { fetchPoaps } from "@/lib/poap";
-import axios from "axios";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-export default function Home() {
-  const walletAddress = "0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426";
-  const fetchAddressData = async () => {
-    await axios
-      .get(`/api/fetchAddressData?address=${walletAddress}`)
-      .then((res) => {
-        console.log(res.data);
-      });
-    const startingBalance = await getBalanceByTimestamp(
-      walletAddress,
-      "2023-01-01T00:00:00Z"
-    );
-    const endingBalance = await getBalanceByTimestamp(
-      walletAddress,
-      "2023-12-31T23:59:59Z"
-    );
-    const mintedNfts = await getMintedNFTs(walletAddress);
-    const deployedContracts = await getDeployedContracts(
-      "0xB8D66FB00061378afd77c5C22E47cFf9C57ca62f"
-    );
-    const tokenBalances = await getTokenBalances(
-      "0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426"
-    ); //Takes long for big wallets. so should whitelist contract address to fetch for balance
-    const poapCount = await fetchPoaps(
-      "0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426"
-    );
-    console.log({ startingBalance })
-    console.log({ endingBalance })
-    console.log({ mintedNfts })
-    console.log({ deployedContracts })
-    console.log({ tokenBalances })
-    console.log({poapCount})
-  };
+export default function MainPage() {
+
+  const [rotate, setRotate] = useState(true)
+  const [count, setCount] = useState(10)
+  const address = useRef<any>()
+  const router = useRouter()
+  useEffect(() => {
+    fetchCount()
+    setTimeout(() => {
+      setRotate(!rotate)
+    }, 1000)
+  }, [])
+
+
+  const fetchCount = async () => {
+    let res = await axios.get('/api/get-user-count')
+    setCount(res.data.data)
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <h1 className="">2023 Recap</h1>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none"></div>
-        <button
-          onClick={async () => {
-            // console.log(
-            //   "Total Gas & Transactions + ERC721 ERC1155 Transfers Most Transacted Wallet"
-            // );
-
-            // await fetchDetailsOfYear(
-            //   "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-            // ); //Vitalik.eth
-            // // await fetchDetailsOfYear("0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426")
-            // let start = await getBalanceByTimestamp(
-            //   "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-            //   "2023-01-01T00:00:00Z"
-            // );
-            // console.log("Starting Balance", start);
-            // let end = await getBalanceByTimestamp(
-            //   "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-            //   "2023-12-31T23:59:59Z"
-            // );
-            // console.log("Ending Balance", end);
-            // console.log("Minted NFTS");
-            // await getMintedNFTs("0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045");
-            // console.log("Deployed Contracts");
-
-            // await getDeployedContracts(
-            //   "0xB8D66FB00061378afd77c5C22E47cFf9C57ca62f"
-            // ); //pol token contract creator
-
-            // console.log("Token Balances");
-
-            // await getTokenBalances(
-            //   "0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426"
-            // ); //Taking time
-            //Can change this to fetching some token balances
-            // https://docs.alchemy.com/docs/how-to-get-token-balance-for-an-address
-          fetchPoaps("0xA4DA350702f06FB8AdE5eba73cdF63DCbBd3a426");
-          }}
-        >
-          Generate Year Data
-        </button>
-        <br></br>
-        <button onClick={fetchAddressData}>Generate Year Data using API</button>
+    <div className="flex px-4 justify-center flex-col gap-2 items-center h-[calc(100vh-150px)] pt-[100px] relative font-aviano">
+      <div className={`${aviano.className} text-3xl md:text-6xl txt-gradient w-full text-center txt txt-rotate ${rotate ? "txt-test" : ""}`}>
+        ETHEREUM
       </div>
-    </main>
-  );
+      <div className={`${aviano.className}  text-3xl md:text-6xl  txt-gradient-2 w-full text-center ${rotate ? "txt-test-2" : ""} `}>
+        2023
+      </div>
+
+      <div className={`logo_letters text-2xl md:text-6xl md:ml-10 flex ${aviano.className} ${rotate ? "txt-test-3" : ""}`}>
+        <div className={`logo__letter is-loaded `}>
+          <div className="logo__character ">U</div>
+          <div className="logo__loader-wrapper">
+          </div>
+        </div>
+        <div className={`logo__letter is-loaded `}>
+          <div className="logo__character ">N</div>
+          <div className="logo__loader-wrapper">
+          </div>
+        </div>
+        <div className="logo__letter is-loaded">
+          <div className="logo__character">W</div>
+          <div className="logo__loader-wrapper">
+          </div>
+        </div>
+        <div className="logo__letter is-loaded">
+          <div className="logo__character">R</div>
+          <div className="logo__loader-wrapper">
+          </div>
+        </div>
+        <div className="logo__letter is-loaded">
+          <div className="logo__character">A</div>
+          <div className="logo__loader-wrapper">
+          </div>
+        </div>
+        <div className="logo__letter is-loaded">
+          <div className="logo__character">P</div>
+          <div className="logo__loader-wrapper">
+          </div>
+        </div>
+        <div className="logo__letter is-loaded">
+          <div className="logo__character">P</div>
+          <div className="logo__loader-wrapper">
+          </div>
+        </div>
+        <div className="logo__letter is-loaded">
+          <div className="logo__character">E</div>
+          <div className="logo__loader-wrapper">
+          </div>
+        </div>
+        <div className="logo__letter is-loaded">
+          <div className="logo__character">D</div>
+          <div className="logo__loader-wrapper">
+          </div>
+        </div>
+      </div>
+
+      <div className={` flex items-center text-xs my-2 text-gray-200 gap-8 text-center font-poppins`}>
+        <div className='relative'>
+          <Avatar className='w-[25px] h-[25px]'>
+            <AvatarImage src="https://avatars.githubusercontent.com/u/4763902?v=4" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <Avatar className='absolute left-2 top-0 w-[25px] h-[25px]'>
+            <AvatarImage src="https://ik.imagekit.io/lens/media-snapshot/09fc09c4baa5c3736f5994e611a95267b9f610323c4e9c85e2297977050b5343.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <Avatar className='absolute left-4 top-0 w-[25px] h-[25px]'>
+            <AvatarImage src="https://i.seadn.io/gcs/files/640c9b283dd80e221a26ff5018530708.png?auto=format&dpr=1&w=1000" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        </div>
+        <p className='font-sora'>
+          {count}+ Users already unwrapped
+        </p>
+      </div>
+
+      <Input ref={address} type="text" placeholder='0x0c81A15f136E92CfDa406247Eb6c21c225Db0A12' className='font-poppins max-w-[400px] bg-[#ffffff1a] text-white mt-4' />
+      <Button
+        className={`${aviano.className} mt-2 relative isolate inline-flex items-center justify-center gap-x-2 rounded-lg border text-base/6 font-semibold px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] sm:px-[calc(theme(spacing.3)-1px)] sm:py-[calc(theme(spacing[1.5])-1px)] sm:text-sm/6 focus:outline-none data-[focus]:outline data-[focus]:outline-2 data-[focus]:outline-offset-2 data-[focus]:outline-blue-500 data-[disabled]:opacity-50 [&>[data-slot=icon]]:-mx-0.5 [&>[data-slot=icon]]:my-0.5 [&>[data-slot=icon]]:size-5 [&>[data-slot=icon]]:shrink-0 [&>[data-slot=icon]]:text-[--btn-icon] [&>[data-slot=icon]]:sm:my-1 [&>[data-slot=icon]]:sm:size-4 forced-colors:[--btn-icon:ButtonText] forced-colors:data-[hover]:[--btn-icon:ButtonText] border-transparent bg-[--btn-border] dark:bg-[--btn-bg] before:absolute before:inset-0 before:-z-10 before:rounded-[calc(theme(borderRadius.lg)-1px)] before:bg-[--btn-bg] before:shadow dark:before:hidden dark:border-white/5 after:absolute after:inset-0 after:-z-10 after:rounded-[calc(theme(borderRadius.lg)-1px)] after:shadow-[shadow:inset_0_1px_theme(colors.white/15%)] after:data-[active]:bg-[--btn-hover-overlay] after:data-[hover]:bg-[--btn-hover-overlay] dark:after:-inset-px dark:after:rounded-lg before:data-[disabled]:shadow-none after:data-[disabled]:shadow-none text-white [--btn-bg:theme(colors.zinc.900)] [--btn-border:theme(colors.zinc.950/90%)] [--btn-hover-overlay:theme(colors.white/10%)] dark:text-white dark:[--btn-bg:theme(colors.zinc.600)] dark:[--btn-hover-overlay:theme(colors.white/5%)] [--btn-icon:theme(colors.zinc.400)] data-[active]:[--btn-icon:theme(colors.zinc.300)] data-[hover]:[--btn-icon:theme(colors.zinc.300)] cursor-pointer hover:opacity-90`}
+        onClick={() => router.push(`/address/${address.current.value}`)}>
+        UNWRAP 🔥
+      </Button>
+
+    </div >
+  )
 }
