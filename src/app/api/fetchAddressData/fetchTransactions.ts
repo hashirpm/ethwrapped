@@ -19,12 +19,6 @@ export const getTransactions = async (
         ...params,
       },
     });
-    // console.log(response.data.result);
-
-    if (response.data.status !== "1") {
-      throw new Error(`Error from Etherscan API: ${response.data.message}`);
-    }
-    // console.log("getTransactions", response.data);
 
     const transactions: Transaction[] = response.data.result.map((tx: any) => ({
       hash: tx.hash,
