@@ -187,7 +187,11 @@ export default function FetchDetails() {
                                     </div>
                                     <div className="relative h-full w-full rounded-xl bg-zinc-900 shadow-[0px_0px_0px_1px_rgba(255,255,255,0.1)] before:pointer-events-none before:absolute before:-inset-px before:rounded-xl before:shadow-[0px_2px_8px_0px_rgba(0,_0,_0,_0.20),_0px_1px_0px_0px_rgba(255,_255,_255,_0.06)_inset] forced-colors:outline">
                                         <div className="box bg-zinc-900 rounded-lg flex justify-center items-center flex-col h-full" >
-                                            <p className="text-3xl font-bold text-gray-200">{shortWalletAddress(data.mostTransactedAddress)}</p>
+                                            <p className="text-3xl font-bold text-gray-200">
+                                                <Link href={`https://etherscan.io/address/${data.mostTransactedAddress}`} target="_blank">
+                                                    {shortWalletAddress(data.mostTransactedAddress)}
+                                                </Link>
+                                            </p>
                                             <p className="text-gray-400 text-xs">Address you most interacted with</p>
                                         </div>
                                     </div>
