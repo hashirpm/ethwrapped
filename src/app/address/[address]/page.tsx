@@ -1,4 +1,5 @@
 "use client"
+export const dynamic = "force-dynamic";
 import { useEffect, useRef, useState } from "react"
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import { aviano, shortWalletAddress } from "@/lib/const";
@@ -8,7 +9,7 @@ import { Data } from "@/lib/types";
 import Logo from "../../../../public/logo.png"
 import Image from "next/image";
 import { toPng } from 'html-to-image';
-import { getBalanceByTimestamp, getDeployedContracts, getMintedNFTs, getTokenBalances } from "@/lib/alchemy";
+import { getBalanceByTimestamp, getDeployedContracts, getMintedNFTs } from "@/lib/alchemy";
 import { calculatePercentageChange } from "@/lib/helper";
 import confetti from 'canvas-confetti';
 import { fetchPoaps } from "@/lib/poap";
