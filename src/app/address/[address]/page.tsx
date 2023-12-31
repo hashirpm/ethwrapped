@@ -267,6 +267,8 @@ export default function FetchDetails() {
 
             }
 
+
+
         </div>
     )
 }
