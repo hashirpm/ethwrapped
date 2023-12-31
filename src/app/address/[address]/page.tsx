@@ -28,7 +28,11 @@ export default function FetchDetails() {
 
     const fetchData = async () => {
         let address = path.split('/')[2]
-
+        await axios.get('/api/add-address', {
+            params: {
+                address
+            }
+        })
         let nftsMinted = await getMintedNFTs(address)
         let contractCount = await getDeployedContracts(address)
         let poap = await fetchPoaps(address)
@@ -54,11 +58,6 @@ export default function FetchDetails() {
             }
         }).then(async (res) => {
             setData(res.data)
-            await axios.get('/api/add-address', {
-                params: {
-                    address
-                }
-            })
             var end = Date.now() + (3 * 1000);
 
             // go Buckeyes!
