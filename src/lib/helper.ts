@@ -298,6 +298,7 @@ export function calculatePercentageChange(startPrice: number, endPrice: number) 
   // Calculate the percentage change
   const percentageChange = ((endPrice - startPrice) / startPrice) * 100;
 
+
   return percentageChange;
 }
 
