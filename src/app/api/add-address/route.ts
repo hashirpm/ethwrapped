@@ -6,6 +6,8 @@ export async function GET(req: NextRequest) {
 
     try {
 
+
+
         const { searchParams } = new URL(req.url as string);
         const walletAddress = searchParams.get("address") as string;
         const supabase = createClient(process.env.SUPABASE_PROJECT_URL as string, process.env.SUPABASE_API_KEY as string)
@@ -17,7 +19,6 @@ export async function GET(req: NextRequest) {
                 { address: walletAddress },
             ])
             .select("*")
-        console.log(data)
         if (data.error == null) {
             return NextResponse.json({ status: true, data })
         } else {
