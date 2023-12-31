@@ -5,7 +5,6 @@ import { aviano, shortWalletAddress } from "@/lib/const";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import { Data } from "@/lib/types";
-import { Button } from "@/components/ui/button";
 import Logo from "../../../../public/logo.png"
 import Image from "next/image";
 import { toPng } from 'html-to-image';
@@ -27,7 +26,7 @@ export default function FetchDetails() {
     const path = usePathname()
 
     const fetchData = async () => {
-        let address = path.split('/')[2]
+        let address = await path.split('/')[2]
         await axios.get('/api/add-address', {
             params: {
                 address

@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 export const fromBlock = 16308214;
-export const toBlock = 18868209;
+export const toBlock = 18904200;
 
 export interface Transaction {
   hash: string;
