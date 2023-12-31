@@ -242,7 +242,7 @@ export default function FetchDetails() {
                                 </div>
 
                                 <div className={`${aviano.className}  txt-gradient px-4  text-center `}>
-                                    UNWRAPPED
+                                    WRAPPED
                                 </div>
                             </div> */}
                         </div>
