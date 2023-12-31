@@ -18,17 +18,21 @@ const dater = new EthDater(
 
 export const getBalanceByTimestamp = async (
   address: string,
-  timestamp: string
+  val: 0 | 1
 ) => {
-  // Get blocknumber
-  let block = await dater.getDate(timestamp);
-  block = block["block"];
 
   // Get balance and format in terms of ETH
-  let balance = await alchemy.core.getBalance(address, block);
-  balance = Utils.formatEther(balance);
-  // console.log(`Balance of ${address}: ${balance} ETH`);
-  return { balance };
+  if (val == 0) {
+    let balance = await alchemy.core.getBalance(address, fromBlock);
+    balance = Utils.formatEther(balance);
+    // console.log(`Balance of ${address}: ${balance} ETH`);
+    return { balance };
+  } else {
+    let balance = await alchemy.core.getBalance(address, toBlock);
+    balance = Utils.formatEther(balance);
+    // console.log(`Balance of ${address}: ${balance} ETH`);
+    return { balance };
+  }
 };
 export const getMintedNFTs = async (address: string) => {
   const res = await alchemy.core.getAssetTransfers({

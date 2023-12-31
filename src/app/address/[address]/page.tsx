@@ -41,11 +41,11 @@ export default function FetchDetails() {
         setNftsMintedCount(nftsMinted.erc1155List.length + nftsMinted.erc721List.length)
         let start = await getBalanceByTimestamp(
             address,
-            "2023-01-01T00:00:00Z"
+            0
         );
         let end = await getBalanceByTimestamp(
             address,
-            "2023-12-31T23:59:59Z"
+            1
         );
         if (start.balance == end.balance) {
             setPortfolio(0)
