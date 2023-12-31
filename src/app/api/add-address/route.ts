@@ -20,11 +20,11 @@ export async function GET(req: NextRequest) {
         if (data.error == null) {
             return NextResponse.json({ status: true, data })
         } else {
-            return NextResponse.json({ status: false })
+            return NextResponse.json({ status: false, err: data })
         }
     } catch (err) {
         console.log(err)
-        return NextResponse.json({ status: false })
+        return NextResponse.json({ status: false, err })
     }
 
 
