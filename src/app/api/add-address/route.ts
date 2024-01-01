@@ -28,4 +28,6 @@ export async function GET(req: NextRequest) {
         console.log(err)
         return NextResponse.json({ status: false, err })
     }
+
+
 }
