@@ -12,25 +12,18 @@ const settings = {
 
 const alchemy = new Alchemy(settings);
 
-const dater = new EthDater(
-  alchemy.core // Ethers provider, required.
-);
+const dater = new EthDater(alchemy.core);
 
-export const getBalanceByTimestamp = async (
-  address: string,
-  val: 0 | 1
-) => {
-
-  // Get balance and format in terms of ETH
+export const getBalanceByTimestamp = async (address: string, val: 0 | 1) => {
   if (val == 0) {
     let balance = await alchemy.core.getBalance(address, fromBlock);
     balance = Utils.formatEther(balance);
-    // console.log(`Balance of ${address}: ${balance} ETH`);
+
     return { balance };
   } else {
     let balance = await alchemy.core.getBalance(address, toBlock);
     balance = Utils.formatEther(balance);
-    // console.log(`Balance of ${address}: ${balance} ETH`);
+
     return { balance };
   }
 };
@@ -43,7 +36,7 @@ export const getMintedNFTs = async (address: string) => {
     excludeZeroValue: true,
     category: ["erc721", "erc1155"],
   });
-  // Print contract address and tokenId for each NFT (ERC721 or ERC1155):
+
   const erc721List = [];
   const erc1155List = [];
   for (const events of res.transfers) {
@@ -52,48 +45,31 @@ export const getMintedNFTs = async (address: string) => {
         address: events.rawContract.address,
         tokenId: events.tokenId,
       });
-      // console.log(
-      //   "ERC-721 Token Minted: ID- ",
-      //   events.tokenId,
-      //   " Contract- ",
-      //   events.rawContract.address
-      // );
     } else {
       for (const erc1155 of events.erc1155Metadata) {
         erc1155List.push({
           address: events.rawContract.address,
           tokenId: events.tokenId,
         });
-
-        // console.log(
-        //   "ERC-1155 Token Minted: ID- ",
-        //   erc1155.tokenId,
-        //   " Contract- ",
-        //   events.rawContract.address
-        // );
       }
     }
   }
 
-  // console.log({ erc721List });
-  // console.log({ erc1155List });
   return { erc721List, erc1155List };
 };
 
 export const getDeployedContracts = async (address: string) => {
   const transfers = [];
 
-  // Paginate through the results using getAssetTransfers method
   let response = await alchemy.core.getAssetTransfers({
     fromBlock: fromBlock,
     toBlock: toBlock,
-    fromAddress: address, // Filter results to only include transfers from the specified address
-    excludeZeroValue: false, // Include transfers with a value of 0
-    category: ["external"], // Filter results to only include external transfers
+    fromAddress: address,
+    excludeZeroValue: false,
+    category: ["external"],
   });
   transfers.push(...response.transfers);
 
-  // Continue fetching and aggregating results while there are more pages
   while (response.pageKey) {
     let pageKey = response.pageKey;
     response = await alchemy.core.getAssetTransfers({
@@ -107,26 +83,21 @@ export const getDeployedContracts = async (address: string) => {
     transfers.push(...response.transfers);
   }
 
-  // Filter the transfers to only include contract deployments (where 'to' is null)
   const deployments = transfers.filter((transfer) => transfer.to === null);
   const txHashes = deployments.map((deployment) => deployment.hash);
 
-  // Fetch the transaction receipts for each of the deployment transactions
   const promises = txHashes.map((hash) =>
     alchemy.core.getTransactionReceipt(hash)
   );
 
-  // Wait for all the transaction receipts to be fetched
   const receipts = await Promise.all(promises);
   const contractAddresses = receipts.map((receipt) => receipt?.contractAddress);
-  // console.log({ contractAddresses });
+
   return { contractAddresses };
 };
 export const getTokenBalances = async (address: string) => {
-  // Get token balances
   const balances = await alchemy.core.getTokenBalances(address);
-  // console.log(balances)
-  // Remove tokens with zero balance
+
   const nonZeroBalances = balances.tokenBalances.filter((token: any) => {
     return (
       token.tokenBalance !==
@@ -135,18 +106,14 @@ export const getTokenBalances = async (address: string) => {
   });
 
   const tokenBalanceList = [];
-  // Counter for SNo of final output
+
   let i = 1;
 
-  // Loop through all tokens with non-zero balance
   for (let token of nonZeroBalances) {
-    // Get balance of token
     let balance = token.tokenBalance;
 
-    // Get metadata of token
     const metadata = await alchemy.core.getTokenMetadata(token.contractAddress);
 
-    // Compute token balance in human-readable format
     balance = balance / Math.pow(10, metadata.decimals);
     balance = balance.toFixed(2);
 
@@ -157,31 +124,6 @@ export const getTokenBalances = async (address: string) => {
     });
     console.log("fetching");
   }
-  // console.log({ tokenBalanceList });
+
   return { tokenBalanceList };
 };
-// export const getNFTAirdrops = async (address: string) => {
-//   //Define the optional `options` parameters
-//   const nftList = [];
-//   let options = {
-//     excludeFilters: "SPAM",
-//     orderBy: "TRANSFERTIME",
-//   };
-
-//   //Call the method to get the nfts owned by this address
-//   let response = await alchemy.nft.getNftsForOwner(address, options);
-
-//   nftList.push(...response.ownedNfts);
-//   while (response.pageKey) {
-//     let pageKey = response.pageKey;
-//     response = await alchemy.nft.getNftsForOwner(address, options, pageKey);
-//     nftList.push(...response.ownedNfts);
-//   }
-//   console.log({ nftList });
-//   // Filter ownedNfts for the year 2023
-//   const ownedNfts2023 = nftList.filter((nft: any) => {
-//     const nftTimestamp = new Date(nft.blockTimestamp);
-//     return nftTimestamp.getFullYear() === 2023;
-//   });
-//   console.log({ ownedNfts2023 });
-// };

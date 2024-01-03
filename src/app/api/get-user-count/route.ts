@@ -6,7 +6,6 @@ export async function GET(req: NextRequest) {
     const data = await supabase
         .from('wallets')
         .select('*', { count: 'estimated' })
-    console.log(data)
 
     if (data.error == null) {
         return NextResponse.json({ status: true, data: data.count })

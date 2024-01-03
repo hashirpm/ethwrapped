@@ -6,9 +6,6 @@ import { processTransactions } from "./processTransaction";
 
 
 export async function GET(req: NextRequest) {
-  //   const reqBody = await req.json();
-  //   const walletAddress = reqBody.address;
-  console.log("inside server");
   const { searchParams } = new URL(req.url as string);
   const walletAddress = searchParams.get("address") as string;
   const startBlock = fromBlock;
