@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 export const fromBlock = 16308214;
-export const toBlock = 18904200;
+export const toBlock = 18908893;
 
 export interface Transaction {
   hash: string;
@@ -16,8 +16,6 @@ export const aviano = localFont({
   src: '../../public/aviano.ttf',
   display: 'fallback',
 })
-
-
 
 export const shortWalletAddress = (address?: string) => {
   if (address == "N/A") return "N/A"

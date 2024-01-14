@@ -36,8 +36,6 @@ export const fetchPoaps = async (address: string) => {
     const mainnetPoaps = await mainnetClient.query({
       query: gql(tokenQuery),
     });
-    console.log(gnosisPoaps.data.tokens);
-    console.log(mainnetPoaps.data.tokens);
     return {
       total: gnosisPoaps.data.tokens.length + mainnetPoaps.data.tokens.length,
       gnosisPoapCount: gnosisPoaps.data.tokens.length,
