@@ -11,6 +11,7 @@ import { getAddressByEns } from '@/lib/ens'
 import { toast } from 'sonner'
 import { Info, Loader2 } from 'lucide-react'
 import { isValidEthereumAddress } from '@/lib/helper'
+import Link from 'next/link'
 
 export default function MainPage() {
 
@@ -110,6 +111,8 @@ export default function MainPage() {
           </div>
         </div>
       </div>
+
+      <Link href="https://www.producthunt.com/posts/ethwrapped?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-ethwrapped" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=434384&theme=light" alt="ETHWrapped - Discover&#0032;your&#0032;Ethereum&#0032;adventures&#0032;of&#0032;2023 | Product Hunt" className='w-[200px] my-6 h-[54px]' width="250" height="54" /></Link>
 
       <div className={` flex items-center text-xs my-2 text-gray-200 gap-8 text-center font-poppins`}>
         <div className='relative'>
